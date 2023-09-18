@@ -89,57 +89,58 @@ tfp(r,s) = 0;
 
 
 * $exit
+
 																						
-* New/updated model variables
-$sectors:
-	C(r,o)$popr(r,o)		! Aggregate final demand
-	LS(r,o)$popr(r,o)		! Labor Supply
+* * New/updated model variables
+* $sectors:
+* 	C(r,o)$popr(r,o)		! Aggregate final demand
+* 	LS(r,o)$popr(r,o)		! Labor Supply
 
-$commodities:
-	PC(r,o)$popr(r,o)		! Consumer price index
-	PL(r,o,s)$ld0_o(r,o,s)	! Wage
-	PELL(r,o)$popr(r,o)		! Opportunity cost of labor
+* $commodities:
+* 	PC(r,o)$popr(r,o)		! Consumer price index
+* 	PL(r,o,s)$ld0_o(r,o,s)	! Wage
+* 	PELL(r,o)$popr(r,o)		! Opportunity cost of labor
 	
-$consumer:
-	RA(r,o)$popr(r,o)		! Representative agent
-	GOVT					! Government
+* $consumer:
+* 	RA(r,o)$popr(r,o)		! Representative agent
+* 	GOVT					! Government
 
-$auxiliary:
-	TRANS					! Transfers
+* $auxiliary:
+* 	TRANS					! Transfers
 
-$prod:Y(r,s)$y_(r,s)  s:0 va:1
-	o:PY(r,g)		q:(ys0(r,s,g)*(1-tfp(r,s)))		a:GOVT 	t:ty(r,s)	p:(1-ty0(r,s))
-	i:PA(r,g)		q:(id0(r,g,s)*(1-aeeir(r,g)))	a:GOVT	t:te(r,g,s)
-	i:PK(r,s)		q:kd0(r,s)		va:	
-	i:PL(r,o,s)		q:ld0_o(r,o,s)	va:
+* $prod:Y(r,s)$y_(r,s)  s:0 va:1
+* 	o:PY(r,g)		q:(ys0(r,s,g)*(1-tfp(r,s)))		a:GOVT 	t:ty(r,s)	p:(1-ty0(r,s))
+* 	i:PA(r,g)		q:(id0(r,g,s)*(1-aeeir(r,g)))	a:GOVT	t:te(r,g,s)
+* 	i:PK(r,s)		q:kd0(r,s)		va:	
+* 	i:PL(r,o,s)		q:ld0_o(r,o,s)	va:
 
-$prod:LS(r,o)$popr(r,o)	t:1
-	o:PL(r,o,s)		q:ld0_o(r,o,s)
-	i:PELL(r,o)		q:(sum(s,ld0_o(r,o,s)))
+* $prod:LS(r,o)$popr(r,o)	t:1
+* 	o:PL(r,o,s)		q:ld0_o(r,o,s)
+* 	i:PELL(r,o)		q:(sum(s,ld0_o(r,o,s)))
 
-$prod:C(r,o)$popr(r,o)  s:1
-    o:PC(r,o)		q:(c0(r)*popr(r,o))
-	i:PA(r,g)		q:(cd0(r,g)*popr(r,o))
+* $prod:C(r,o)$popr(r,o)  s:1
+*     o:PC(r,o)		q:(c0(r)*popr(r,o))
+* 	i:PA(r,g)		q:(cd0(r,g)*popr(r,o))
 
-$demand:RA(r,o)$popr(r,o)
-	d:PC(r,o)		q:(c0(r)*popr(r,o))
-	e:PY(r,g)		q:(yh0(r,g)*popr(r,o))
-	e:PFX			q:((bopdef0(r) + hhadj(r))*popr(r,o))
-	e:PA(r,g)		q:(-(i0(r,g))*popr(r,o))
-	e:PELL(r,o)		q:((sum((s,o.local),ld0_o(r,o,s)))*popr(r,o))
-	e:PK(r,s)		q:(kd0(r,s)*popr(r,o))
-	e:PFX			q:tpo(r,o)	r:TRANS
+* $demand:RA(r,o)$popr(r,o)
+* 	d:PC(r,o)		q:(c0(r)*popr(r,o))
+* 	e:PY(r,g)		q:(yh0(r,g)*popr(r,o))
+* 	e:PFX			q:((bopdef0(r) + hhadj(r))*popr(r,o))
+* 	e:PA(r,g)		q:(-(i0(r,g))*popr(r,o))
+* 	e:PELL(r,o)		q:((sum((s,o.local),ld0_o(r,o,s)))*popr(r,o))
+* 	e:PK(r,s)		q:(kd0(r,s)*popr(r,o))
+* 	e:PFX			q:tpo(r,o)	r:TRANS
 	
-$demand:GOVT
-	d:PA(r,g)		q:g0(r,g)
-	e:PFX			q:gov0
-	e:PFX			q:(-sum((r,o),tpo(r,o)))	r:TRANS
+* $demand:GOVT
+* 	d:PA(r,g)		q:g0(r,g)
+* 	e:PFX			q:gov0
+* 	e:PFX			q:(-sum((r,o),tpo(r,o)))	r:TRANS
 
-$constraint:TRANS
-	GOVT =e= sum((r,g),PA(r,g)*g0(r,g));
+* $constraint:TRANS
+* 	GOVT =e= sum((r,g),PA(r,g)*g0(r,g));
 
-$report:
-	v:LOS(r,o,s)	o:PL(r,o,s)	prod:LS(r,o)
+* $report:
+* 	v:LOS(r,o,s)	o:PL(r,o,s)	prod:LS(r,o)
 
 
 
